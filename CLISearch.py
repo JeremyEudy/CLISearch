@@ -24,10 +24,18 @@ else:
         topics = answer['RelatedTopics']
         text = list("")
         urls = list("")
-        for i in range(0, 3):
+        counter = 0
+        for elem in topics:
+            try:
+                if(elem['FirstURL'] != None):
+                    counter+=1
+            except:
+                pass
+
+        for i in range(0, counter):
             text.append(topics[i]['Text'])
             urls.append(topics[i]['FirstURL'])
 
         print('Related topics:')
-        for i in range(0, 3):
+        for i in range(0, counter):
             print('\t{}\n\t{}\n'.format(text[i], urls[i]))
