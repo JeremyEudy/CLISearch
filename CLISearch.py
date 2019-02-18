@@ -2,7 +2,6 @@
 import json
 import requests
 import sys
-from pprint import pprint
 from urllib.parse import urlencode, quote_plus
 from py_expression_eval import Parser
 
