@@ -13,6 +13,7 @@ search = sys.argv
 parser = Parser()
 if(len(search) == 0):
     print("Usage: search *search string*")
+
 else:
     urlFront = "https://api.duckduckgo.com/?"
     altUrlFront = "https://duckduckgo.com/?q="
@@ -22,6 +23,7 @@ else:
     params = {'q': search, 'o':'json'}
     url = urlFront+urlencode(params, quote_via=quote_plus)
     altUrl = altUrlFront+stdSearch+altUrlBack
+
     try:
         answer = json.loads(requests.get(url).text)
     except:
@@ -50,6 +52,7 @@ else:
             urls.append(topics[i]['FirstURL'])
 
         print('Related topics:')
+
         for i in range(0, counter):
             print('\t{}\n\t{}\n'.format(text[i], urls[i]))
 
