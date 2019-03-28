@@ -2,4 +2,4 @@
 #Installs dependencies |
 #-----------------------
 
-pip3 install py_expression_eval
+sudo pip3 install py_expression_eval

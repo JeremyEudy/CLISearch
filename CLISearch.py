@@ -20,12 +20,14 @@ else:
     altUrlBack = "&atb-v1-1&ia=web"
     apiSearch = ''.join(search[1:])
     stdSearch = '+'.join(search[1:])
-    params = {'q': search, 'o':'json'}
+    params = {'q': search[1:], 'o':'json'}
     url = urlFront+urlencode(params, quote_via=quote_plus)
     altUrl = altUrlFront+stdSearch+altUrlBack
 
     try:
+        print(url)
         answer = json.loads(requests.get(url).text)
+
     except:
         print("Please connect to a network.")
         sys.exit()
@@ -35,7 +37,6 @@ else:
         print('{} = {}'.format(search, exp))
 
     else:
-        print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
         topics = answer['RelatedTopics']
         text = list("")
         urls = list("")
@@ -47,14 +48,18 @@ else:
             except:
                 pass
 
-        for i in range(0, counter):
-            text.append(topics[i]['Text'])
-            urls.append(topics[i]['FirstURL'])
-
-        print('Related topics:')
-
-        for i in range(0, counter):
-            print('\t{}\n\t{}\n'.format(text[i], urls[i]))
-
         if(counter == 0):
-            print("\nNo instant answers available, here's a direct link:\n\t{}\n".format(altUrl))
+            print("No instant answers available, here's a direct link:\n\t{}\n".format(altUrl))
+
+        else:
+            print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
+
+            for i in range(0, counter):
+                text.append(topics[i]['Text'])
+                urls.append(topics[i]['FirstURL'])
+
+            print('Related topics:')
+
+            for i in range(0, counter):
+                print('\t{}\n\t{}\n'.format(text[i], urls[i]))
+
