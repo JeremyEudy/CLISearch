@@ -20,7 +20,7 @@ else:
     altUrlBack = "&atb-v1-1&ia=web"
     apiSearch = ''.join(search[1:])
     stdSearch = '+'.join(search[1:])
-    params = {'q': search, 'o':'json'}
+    params = {'q': apiSearch, 'o':'json'}
     url = urlFront+urlencode(params, quote_via=quote_plus)
     altUrl = altUrlFront+stdSearch+altUrlBack
 
@@ -31,11 +31,10 @@ else:
         sys.exit()
 
     if(answer['Answer'] != '' and answer['Answer']['id'] == 'calculator'):
-        exp = str(parser.parse(search).evaluate({}))
-        print('{} = {}'.format(search, exp))
+        exp = str(parser.parse(apiSearch).evaluate({}))
+        print('{} = {}'.format(apiSearch, exp))
 
     else:
-        print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
         topics = answer['RelatedTopics']
         text = list("")
         urls = list("")
@@ -51,7 +50,9 @@ else:
             text.append(topics[i]['Text'])
             urls.append(topics[i]['FirstURL'])
 
-        print('Related topics:')
+        if counter != 0:
+            print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
+            print('Related topics:')
 
         for i in range(0, counter):
             print('\t{}\n\t{}\n'.format(text[i], urls[i]))
