@@ -20,16 +20,11 @@ else:
     altUrlBack = "&atb-v1-1&ia=web"
     apiSearch = ''.join(search[1:])
     stdSearch = '+'.join(search[1:])
-<<<<<<< HEAD
     params = {'q': apiSearch, 'o':'json'}
-=======
-    params = {'q': search[1:], 'o':'json'}
->>>>>>> 986f30eaeb1824860bcf38fd334b1f27c5a5d9a5
     url = urlFront+urlencode(params, quote_via=quote_plus)
     altUrl = altUrlFront+stdSearch+altUrlBack
 
     try:
-        print(url)
         answer = json.loads(requests.get(url).text)
 
     except:
@@ -55,20 +50,13 @@ else:
         if(counter == 0):
             print("No instant answers available, here's a direct link:\n\t{}\n".format(altUrl))
 
-<<<<<<< HEAD
         if counter != 0:
             print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
             print('Related topics:')
-=======
-        else:
-            print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
->>>>>>> 986f30eaeb1824860bcf38fd334b1f27c5a5d9a5
-
+            
             for i in range(0, counter):
                 text.append(topics[i]['Text'])
                 urls.append(topics[i]['FirstURL'])
-
-            print('Related topics:')
 
             for i in range(0, counter):
                 print('\t{}\n\t{}\n'.format(text[i], urls[i]))
