@@ -11,13 +11,17 @@ from py_expression_eval import Parser
 
 search = sys.argv
 parser = Parser()
-if(len(search) == 0):
-    print("Usage: search *search string*")
+wiki = False
+if len(search) == 1 or search[1] == '-w' and len(search) == 2:
+    print("\nUsage: search *search string*")
 
 else:
     urlFront = "https://api.duckduckgo.com/?"
     altUrlFront = "https://duckduckgo.com/?q="
     altUrlBack = "&atb-v1-1&ia=web"
+    if search[1] == '-w':
+        wiki = True
+        search.pop(1)
     apiSearch = ''.join(search[1:])
     stdSearch = '+'.join(search[1:])
     params = {'q': apiSearch, 'o':'json'}
@@ -31,11 +35,11 @@ else:
         print("Please connect to a network.")
         sys.exit()
 
-    if(answer['Answer'] != '' and answer['Answer']['id'] == 'calculator'):
+    if answer['Answer'] != '' and answer['Answer']['id'] == 'calculator':
         exp = str(parser.parse(apiSearch).evaluate({}))
         print('{} = {}'.format(apiSearch, exp))
 
-    else:
+    elif wiki == False:
         topics = answer['RelatedTopics']
         text = list("")
         urls = list("")
@@ -47,13 +51,13 @@ else:
             except:
                 pass
 
-        if(counter == 0):
+        if counter == 0:
             print("No instant answers available, here's a direct link:\n\t{}\n".format(altUrl))
 
         if counter != 0:
             print('Abstract URL:\n\t{}\n'.format(answer['AbstractURL']))
             print('Related topics:')
-            
+
             for i in range(0, counter):
                 text.append(topics[i]['Text'])
                 urls.append(topics[i]['FirstURL'])
